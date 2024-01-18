@@ -1,11 +1,8 @@
-# Database Management System Lab
-
-- [Database Management System Lab](#database-management-system-lab)
-  - [Experiments](#experiments)
-    - [1. Write a query to show existing databases;](#1-write-a-query-to-show-existing-databases)
-    - [1. Write a query to create a database.](#1-write-a-query-to-create-a-database)
-    - [1. Write a MySQL query to create a simple table countries including columns country_id, country_name and region_id.](#1-write-a-mysql-query-to-create-a-simple-table-countries-including-columns-country_id-country_name-and-region_id)
-    - [1. Write a MySQL query to create a simple table countries including columns country_id, country_name and region_id which is already exists.](#1-write-a-mysql-query-to-create-a-simple-table-countries-including-columns-country_id-country_name-and-region_id-which-is-already-exists)
+- [Experiments](#experiments)
+  - [1. Write a query to show existing databases;](#1-write-a-query-to-show-existing-databases)
+  - [2. Write a query to create a database.](#2-write-a-query-to-create-a-database)
+  - [3. Write a MySQL query to create a simple table countries including columns country_id, country_name and region_id.](#3-write-a-mysql-query-to-create-a-simple-table-countries-including-columns-country_id-country_name-and-region_id)
+  - [4. Write a MySQL query to create a simple table countries including columns country_id, country_name and region_id which is already exists.](#4-write-a-mysql-query-to-create-a-simple-table-countries-including-columns-country_id-country_name-and-region_id-which-is-already-exists)
 
 ## Experiments
 
@@ -32,7 +29,7 @@ show databases;
 7 rows in set (0.01 sec)
 ```
 
-### 1. Write a query to create a database.
+### 2. Write a query to create a database.
 
 ```sql
 create database ritwick;
@@ -57,7 +54,7 @@ show databases;
 8 rows in set (0.00 sec)
 ```
 
-### 1. Write a MySQL query to create a simple table countries including columns country_id, country_name and region_id.
+### 3. Write a MySQL query to create a simple table countries including columns country_id, country_name and region_id.
 
 ```sql
 create table ritwick.countries (
@@ -81,7 +78,7 @@ desc ritwick.countries;
 3 rows in set (0.00 sec)
 ```
 
-### 1. Write a MySQL query to create a simple table countries including columns country_id, country_name and region_id which is already exists.
+### 4. Write a MySQL query to create a simple table countries including columns country_id, country_name and region_id which is already exists.
 
 ```sql
 create table if not exists ritwick.countries (
