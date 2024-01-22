@@ -15,7 +15,7 @@
   - [14. Write a MySQL query to create a table named jobs including columns job_id, job_title, min_salary, max_salary and check whether the max_salary amount exceeding the upper limit 25000.](#14-write-a-mysql-query-to-create-a-table-named-jobs-including-columns-job_id-job_title-min_salary-max_salary-and-check-whether-the-max_salary-amount-exceeding-the-upper-limit-25000)
   - [15. Insert a record into jobs table with max_salary 30000.](#15-insert-a-record-into-jobs-table-with-max_salary-30000)
 - [Single table experiments (Customers table)](#single-table-experiments-customers-table)
-  - [16. Find out all such customer's codes and names who live in country UK.](#16-find-out-all-such-customers-codes-and-names-who-live-in-country-uk)
+  - [16. Find out all such customer's code and name who live in country UK.](#16-find-out-all-such-customers-code-and-name-who-live-in-country-uk)
   - [17. Find out all such customer's codes and opening amount whose opening amount is at least 8000.](#17-find-out-all-such-customers-codes-and-opening-amount-whose-opening-amount-is-at-least-8000)
   - [18. Find out all such customer's codes and receive amounts whose receive amount is maximum 5000.](#18-find-out-all-such-customers-codes-and-receive-amounts-whose-receive-amount-is-maximum-5000)
   - [19. Find out all such customer's codes and grade whose grade is not 1 or 2.](#19-find-out-all-such-customers-codes-and-grade-whose-grade-is-not-1-or-2)
@@ -248,8 +248,7 @@ desc countries;
 
 ```sql
 use ritwick;
-create table dup_countries
-like countries;
+create table dup_countries like countries;
 select * from dup_countries;
 ```
 
@@ -351,7 +350,7 @@ values (1, 'nurse', 30000);
 ERROR 3819 (HY000): Check constraint 'jobs_chk_1' is violated.
 ```
 
-## Single table experiments ([Customers table](./code/customers_table.sql))
+## Single table experiments ([Customers table](./code/ritwick.sql))
 
 ```
 +-----------+-------------+-------------------------------------+--------------+--------------+-------+-------------+-------------+-------------+-----------------+--------------+------------+
@@ -386,11 +385,11 @@ ERROR 3819 (HY000): Check constraint 'jobs_chk_1' is violated.
 25 rows in set (0.01 sec)
 ```
 
-### 16. Find out all such customer's codes and names who live in country UK.
+### 16. Find out all such customer's code and name who live in country UK.
 
 ```sql
-select cust_code, cust_name
-from ritwick.customers
+use ritwick;
+select cust_code, cust_name from customers
 where cust_country = 'UK';
 ```
 
@@ -412,8 +411,8 @@ where cust_country = 'UK';
 ### 17. Find out all such customer's codes and opening amount whose opening amount is at least 8000.
 
 ```sql
-select cust_code, opening_amt
-from ritwick.customers
+use ritwick;
+select cust_code, opening_amt from customers
 where opening_amt >= 8000;
 ```
 
@@ -437,8 +436,8 @@ where opening_amt >= 8000;
 ### 18. Find out all such customer's codes and receive amounts whose receive amount is maximum 5000.
 
 ```sql
-select cust_code, receive_amt
-from ritwick.customers
+use ritwick;
+select cust_code, receive_amt from customers
 where receive_amt <= 5000;
 ```
 
@@ -459,8 +458,8 @@ where receive_amt <= 5000;
 ### 19. Find out all such customer's codes and grade whose grade is not 1 or 2.
 
 ```sql
-select cust_code, grade
-from ritwick.customers
+use ritwick;
+select cust_code, grade from customers
 where grade <> 1 and grade <> 2;
 ```
 
@@ -484,8 +483,7 @@ where grade <> 1 and grade <> 2;
 
 ```sql
 use ritwick;
-select cust_code, outstanding_amt
-from customers
+select cust_code, outstanding_amt from customers
 where outstanding_amt between 7000 and 12000;
 ```
 
