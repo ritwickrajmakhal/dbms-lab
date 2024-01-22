@@ -25,6 +25,12 @@
   - [23. Find out the minimum opening amount from customers table.](#23-find-out-the-minimum-opening-amount-from-customers-table)
   - [24. Find out how many customers are having grade 1.](#24-find-out-how-many-customers-are-having-grade-1)
   - [25. Count the number of characters in top 2 customers name.](#25-count-the-number-of-characters-in-top-2-customers-name)
+- [Multiple table experiments (Students, Library).](#multiple-table-experiments-students-library)
+  - [26. Join Student and Library table using full join.](#26-join-student-and-library-table-using-full-join)
+  - [27. Join Student and Library table using inner join.](#27-join-student-and-library-table-using-inner-join)
+  - [28. Join Student and Library table using left outer join.](#28-join-student-and-library-table-using-left-outer-join)
+  - [29. Join Student and Library table using right outer join.](#29-join-student-and-library-table-using-right-outer-join)
+  - [30. Find out the students who are having common Roll no. and branch id using self join.](#30-find-out-the-students-who-are-having-common-roll-no-and-branch-id-using-self-join)
 
 ## Experiments
 
@@ -553,7 +559,8 @@ limit 23, 1;
 
 ```sql
 use ritwick;
-select min(opening_amt) as `minimum opening amount` from customers;
+select min(opening_amt) as `minimum opening amount`
+from customers;
 ```
 
 **Output:**
@@ -570,7 +577,9 @@ select min(opening_amt) as `minimum opening amount` from customers;
 ### 24. Find out how many customers are having grade 1.
 
 ```sql
-select count(grade) as `count of grades` from customers where grade = 1;
+use ritwick;
+select count(grade) as `count of grades`
+from customers where grade = 1;
 ```
 
 **Output:**
@@ -601,4 +610,132 @@ select length(cust_name) from customers limit 2;
 |                 7 |
 +-------------------+
 2 rows in set (0.00 sec)
+```
+
+## Multiple table experiments (Students, Library).
+
+```
+Student Table                        Library Table
++-----+-------+--------+----------+   +-----+--------+----------+
+| RNo | Name  | Fname  | branchId |   | RNo | Bookid | BookName |
++-----+-------+--------+----------+   +-----+--------+----------+
+|   1 | Sumit | Suresh |        1 |   |   1 | B1     | Hamechar |
+|   2 | Amit  | Naresh |        2 |   |   3 | B2     | Galvin   |
+|   3 | Priya | Mahesh |        5 |   |   5 | B3     | CLRS     |
+|   4 | Neha  | Dinesh |        4 |   +-----+--------+----------+
++-----+-------+--------+----------+
+```
+
+### 26. Join Student and Library table using full join.
+
+```sql
+use ritwick;
+(select * from student left join library
+on student.RNo = library.RNo)
+union
+(select * from student right join library
+on student.RNo = library.RNo);
+```
+
+**Output:**
+
+```sql
++------+-------+--------+----------+------+--------+----------+
+| RNo  | Name  | Fname  | branchId | RNo  | Bookid | BookName |
++------+-------+--------+----------+------+--------+----------+
+|    1 | Sumit | Suresh |        1 |    1 | B1     | Hamechar |
+|    2 | Amit  | Naresh |        2 | NULL | NULL   | NULL     |
+|    3 | Priya | Mahesh |        5 |    3 | B2     | Galvin   |
+|    4 | Neha  | Dinesh |        4 | NULL | NULL   | NULL     |
+| NULL | NULL  | NULL   |     NULL |    5 | B3     | CLRS     |
++------+-------+--------+----------+------+--------+----------+
+5 rows in set (0.00 sec)
+```
+
+### 27. Join Student and Library table using inner join.
+
+```sql
+use ritwick;
+select * from students
+inner join library
+on students.RNo = library.RNo;
+```
+
+**Output:**
+
+```sql
++-----+-------+--------+----------+-----+--------+----------+
+| RNo | Name  | Fname  | branchId | RNo | Bookid | BookName |
++-----+-------+--------+----------+-----+--------+----------+
+|   1 | Sumit | Suresh |        1 |   1 | B1     | Hamechar |
+|   3 | Priya | Mahesh |        5 |   3 | B2     | Galvin   |
++-----+-------+--------+----------+-----+--------+----------+
+2 rows in set (0.00 sec)
+```
+
+### 28. Join Student and Library table using left outer join.
+
+```sql
+use ritwick;
+select * from student
+left join library
+on student.RNo = library.RNo;
+```
+
+**Output:**
+
+```sql
++-----+-------+--------+----------+------+--------+----------+
+| RNo | Name  | Fname  | branchId | RNo  | Bookid | BookName |
++-----+-------+--------+----------+------+--------+----------+
+|   1 | Sumit | Suresh |        1 |    1 | B1     | Hamechar |
+|   2 | Amit  | Naresh |        2 | NULL | NULL   | NULL     |
+|   3 | Priya | Mahesh |        5 |    3 | B2     | Galvin   |
+|   4 | Neha  | Dinesh |        4 | NULL | NULL   | NULL     |
++-----+-------+--------+----------+------+--------+----------+
+4 rows in set (0.00 sec)
+```
+
+### 29. Join Student and Library table using right outer join.
+
+```sql
+use ritwick;
+select * from student
+right join library
+on student.RNo = library.Rno;
+```
+
+**Output:**
+
+```sql
++------+-------+--------+----------+-----+--------+----------+
+| RNo  | Name  | Fname  | branchId | RNo | Bookid | BookName |
++------+-------+--------+----------+-----+--------+----------+
+|    1 | Sumit | Suresh |        1 |   1 | B1     | Hamechar |
+|    3 | Priya | Mahesh |        5 |   3 | B2     | Galvin   |
+| NULL | NULL  | NULL   |     NULL |   5 | B3     | CLRS     |
++------+-------+--------+----------+-----+--------+----------+
+3 rows in set (0.00 sec)
+```
+
+### 30. Find out the students who are having common Roll no. and branch id using self join.
+
+```sql
+use ritwick;
+select s1.* from
+student as s1, student as s2
+where s1.RNo = s2.branchId;
+```
+
+**Output:**
+
+```sql
++-----+-------+--------+----------+
+| RNo | Name  | Fname  | branchId |
++-----+-------+--------+----------+
+|   1 | Sumit | Suresh |        1 |
+|   2 | Amit  | Naresh |        2 |
+|   4 | Neha  | Dinesh |        4 |
++-----+-------+--------+----------+
+3 rows in set (0.00 sec)
 ```
