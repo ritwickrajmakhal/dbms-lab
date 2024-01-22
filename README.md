@@ -351,7 +351,7 @@ values (1, 'nurse', 30000);
 ERROR 3819 (HY000): Check constraint 'jobs_chk_1' is violated.
 ```
 
-## Single table experiments (Customers table)
+## Single table experiments ([Customers table](./code/customers_table.sql))
 
 ```
 +-----------+-------------+-------------------------------------+--------------+--------------+-------+-------------+-------------+-------------+-----------------+--------------+------------+
