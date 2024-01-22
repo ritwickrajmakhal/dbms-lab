@@ -20,8 +20,8 @@
   - [18. Find out all such customer's codes and receive amounts whose receive amount is maximum 5000.](#18-find-out-all-such-customers-codes-and-receive-amounts-whose-receive-amount-is-maximum-5000)
   - [19. Find out all such customer's codes and grade whose grade is not 1 or 2.](#19-find-out-all-such-customers-codes-and-grade-whose-grade-is-not-1-or-2)
   - [20. Find out all such customer's code and outstanding amount whose outstanding amount is between 7000 and 12000.](#20-find-out-all-such-customers-code-and-outstanding-amount-whose-outstanding-amount-is-between-7000-and-12000)
-  - [21. Fetch only top two records from customers table.](#21-fetch-only-top-two-records-from-customers-table)
-  - [22. Given that customers table has only 25 records, fetch only 2nd last record.](#22-given-that-customers-table-has-only-25-records-fetch-only-2nd-last-record)
+  - [21. Fetch only top two customer's code and name from customers table.](#21-fetch-only-top-two-customers-code-and-name-from-customers-table)
+  - [22. Given that customers table has only 25 records, fetch only customer's code and name from 2nd last record.](#22-given-that-customers-table-has-only-25-records-fetch-only-customers-code-and-name-from-2nd-last-record)
   - [23. Find out the minimum opening amount from customers table.](#23-find-out-the-minimum-opening-amount-from-customers-table)
   - [24. Find out how many customers are having grade 1.](#24-find-out-how-many-customers-are-having-grade-1)
   - [25. Count the number of characters in top 2 customers name.](#25-count-the-number-of-characters-in-top-2-customers-name)
@@ -511,40 +511,41 @@ where outstanding_amt between 7000 and 12000;
 14 rows in set (0.00 sec)
 ```
 
-### 21. Fetch only top two records from customers table.
+### 21. Fetch only top two customer's code and name from customers table.
 
 ```sql
 use ritwick;
-select * from customers limit 2;
+select cust_code, cust_name from customers limit 2;
 ```
 
 **Output:**
 
 ```sql
-+-----------+-----------+-------------------------------------+--------------+--------------+-------+-------------+-------------+-------------+-----------------+----------+------------+
-| CUST_CODE | CUST_NAME | CUST_CITY                           | WORKING_AREA | CUST_COUNTRY | GRADE | OPENING_AMT | RECEIVE_AMT | PAYMENT_AMT | OUTSTANDING_AMT | PHONE_NO | AGENT_CODE |
-+-----------+-----------+-------------------------------------+--------------+--------------+-------+-------------+-------------+-------------+-----------------+----------+------------+
-| C00013    | Holmes    | London                              | London       | UK           |     2 |     6000.00 |     5000.00 |     7000.00 |         4000.00 | BBBBBBB  | A003       |
-| C00001    | Micheal   | New York                            | New York     | USA          |     2 |     3000.00 |     5000.00 |     2000.00 |         6000.00 | CCCCCCC  | A008       |
-+-----------+-----------+-------------------------------------+--------------+--------------+-------+-------------+-------------+-------------+-----------------+----------+------------+
-2 rows in set (0.00 sec)
++-----------+-----------+
+| cust_code | cust_name |
++-----------+-----------+
+| C00013    | Holmes    |
+| C00001    | Micheal   |
++-----------+-----------+
+2 rows in set (0.01 sec)
 ```
 
-### 22. Given that customers table has only 25 records, fetch only 2nd last record.
+### 22. Given that customers table has only 25 records, fetch only customer's code and name from 2nd last record.
 
 ```sql
 use ritwick;
-select * from customers limit 23, 1;
+select cust_code, cust_name from customers
+limit 23, 1;
 ```
 
 **Output:**
 
 ```sql
-+-----------+------------+-------------------------------------+--------------+--------------+-------+-------------+-------------+-------------+-----------------+----------+------------+
-| CUST_CODE | CUST_NAME  | CUST_CITY                           | WORKING_AREA | CUST_COUNTRY | GRADE | OPENING_AMT | RECEIVE_AMT | PAYMENT_AMT | OUTSTANDING_AMT | PHONE_NO | AGENT_CODE |
-+-----------+------------+-------------------------------------+--------------+--------------+-------+-------------+-------------+-------------+-----------------+----------+------------+
-| C00016    | Venkatpati | Bangalore                           | Bangalore    | India        |     2 |     8000.00 |    11000.00 |     7000.00 |        12000.00 | JRTVFDD  | A007       |
-+-----------+------------+-------------------------------------+--------------+--------------+-------+-------------+-------------+-------------+-----------------+----------+------------+
++-----------+------------+
+| cust_code | cust_name  |
++-----------+------------+
+| C00016    | Venkatpati |
++-----------+------------+
 1 row in set (0.00 sec)
 ```
 
