@@ -31,6 +31,19 @@
   - [28. Join Student and Library table using left outer join.](#28-join-student-and-library-table-using-left-outer-join)
   - [29. Join Student and Library table using right outer join.](#29-join-student-and-library-table-using-right-outer-join)
   - [30. Find out the students who are having common Roll no. and branch id using self join.](#30-find-out-the-students-who-are-having-common-roll-no-and-branch-id-using-self-join)
+- [Single table experiments (Client master)](#single-table-experiments-client-master)
+  - [31. Find out the clients having balance due greater than 50.](#31-find-out-the-clients-having-balance-due-greater-than-50)
+  - [32. Find out all the distinct city of clients.](#32-find-out-all-the-distinct-city-of-clients)
+  - [33. Create a table supplier_master from client_master table and rename the clientNo with supplierNo and name with supplierName.](#33-create-a-table-supplier_master-from-client_master-table-and-rename-the-clientno-with-supplierno-and-name-with-suppliername)
+  - [34. Copy the client 1 entry from client_master table and insert it to supplier_master table.](#34-copy-the-client-1-entry-from-client_master-table-and-insert-it-to-supplier_master-table)
+  - [35. Delete the client from client_master whose due_balence is less than 50.](#35-delete-the-client-from-client_master-whose-due_balence-is-less-than-50)
+  - [36. Increase the due balance of every suppliers by 20%.](#36-increase-the-due-balance-of-every-suppliers-by-20)
+  - [37. Add two columns to store telephone, fax into client master table.](#37-add-two-columns-to-store-telephone-fax-into-client-master-table)
+  - [38. Modify the data type of fax to varchar(14) in client_master.](#38-modify-the-data-type-of-fax-to-varchar14-in-client_master)
+  - [39. Rename table name client_master to client_details.](#39-rename-table-name-client_master-to-client_details)
+  - [40. Write a SQL query to calculate a 5% increase on the `balance_due` and also calculate the new balance by adding this 5% increase to the `balance_due`?](#40-write-a-sql-query-to-calculate-a-5-increase-on-the-balance_due-and-also-calculate-the-new-balance-by-adding-this-5-increase-to-the-balance_due)
+  - [41. Find out all customer whose name starts with 'R'.](#41-find-out-all-customer-whose-name-starts-with-r)
+  - [42. Can you write a SQL query to find clients whose names start with 'ra' or 'so' followed by exactly one or four characters?](#42-can-you-write-a-sql-query-to-find-clients-whose-names-start-with-ra-or-so-followed-by-exactly-one-or-four-characters)
 
 ## Experiments
 
@@ -738,4 +751,291 @@ where s1.RNo = s2.branchId;
 |   4 | Neha  | Dinesh |        4 |
 +-----+-------+--------+----------+
 3 rows in set (0.00 sec)
+```
+
+## Single table experiments (Client master)
+
+```
++----------+-----------+-----------+----------+--------+-------------+---------+---------+-------------+
+| clientNo | name      | address1  | address2 | city   | state       | pincode | remarks | balance_due |
++----------+-----------+-----------+----------+--------+-------------+---------+---------+-------------+
+| 1        | Ritwick   | Khalna    | Howrah   | Bagnan | West Bengal |  711413 | Good    |      100.50 |
+| 2        | Somtirtha | Amoragori | Howrah   | Joypur | West Bengal |  711401 | Best    |        0.00 |
+| 3        | Raj       | Khalna    | Howrah   | Bagnan | West Bengal |  711413 | Great   |       50.50 |
+| 4        | Ram       | Uluberia  | Howrah   | Bagnan | West Bengal |  700001 | Bad     |       60.50 |
++----------+-----------+-----------+----------+--------+-------------+---------+---------+-------------+
+4 rows in set (0.00 sec)
+```
+
+### 31. Find out the clients having balance due greater than 50.
+
+```sql
+select clientNo, name, city, balance_due from client_master
+where balance_due > 50;
+```
+
+**Output:**
+
+```sql
++----------+---------+----------+----------+--------+-------------+---------+---------+-------------+
+| clientNo | name    | address1 | address2 | city   | state       | pincode | remarks | balance_due |
++----------+---------+----------+----------+--------+-------------+---------+---------+-------------+
+| 1        | Ritwick | Khalna   | Howrah   | Bagnan | West Bengal |  711413 | Good    |      100.50 |
+| 3        | Raj     | Khalna   | Howrah   | Bagnan | West Bengal |  711413 | Great   |       50.50 |
+| 4        | Ram     | Uluberia | Howrah   | Bagnan | West Bengal |  700001 | Bad     |       60.50 |
++----------+---------+----------+----------+--------+-------------+---------+---------+-------------+
+3 rows in set (0.00 sec)
+```
+
+### 32. Find out all the distinct city of clients.
+
+```sql
+select distinct city from client_master;
+```
+
+**Output:**
+
+```sql
++--------+
+| city   |
++--------+
+| Bagnan |
+| Joypur |
++--------+
+2 rows in set (0.01 sec)
+```
+
+### 33. Create a table supplier_master from client_master table and rename the clientNo with supplierNo and name with supplierName.
+
+```sql
+create table supplier_master as select * from client_master;
+alter table supplier_master
+  rename column clientNo to supplierNo,
+  rename column name to supplierName;
+select * from supplier_master;
+```
+
+**Output:**
+
+```sql
++------------+--------------+-----------+----------+--------+-------------+---------+---------+-------------+
+| supplierNo | supplierName | address1  | address2 | city   | state       | pincode | remarks | balance_due |
++------------+--------------+-----------+----------+--------+-------------+---------+---------+-------------+
+| 1          | Ritwick      | Khalna    | Howrah   | Bagnan | West Bengal |  711413 | Good    |      100.50 |
+| 2          | Somtirtha    | Amoragori | Howrah   | Joypur | West Bengal |  711401 | Best    |        0.00 |
+| 3          | Raj          | Khalna    | Howrah   | Bagnan | West Bengal |  711413 | Great   |       50.50 |
+| 4          | Ram          | Uluberia  | Howrah   | Bagnan | West Bengal |  700001 | Bad     |       60.50 |
++------------+--------------+-----------+----------+--------+-------------+---------+---------+-------------+
+4 rows in set (0.00 sec)
+```
+
+### 34. Copy the client 1 entry from client_master table and insert it to supplier_master table.
+
+```sql
+insert into supplier_master
+select * from client_master
+where clientNo = 1;
+select supplierNo, supplierName from supplier_master;
+```
+
+**Output:**
+
+```sql
++------------+--------------+
+| supplierNo | supplierName |
++------------+--------------+
+| 1          | Ritwick      |
+| 2          | Somtirtha    |
+| 3          | Raj          |
+| 4          | Ram          |
+| 1          | Ritwick      |
++------------+--------------+
+5 rows in set (0.00 sec)
+```
+
+### 35. Delete the client from client_master whose due_balence is less than 50.
+
+```sql
+delete from client_master
+where balance_due < 50;
+select name, balance_due from client_master;
+```
+
+**Output:**
+
+```sql
++---------+-------------+
+| name    | balance_due |
++---------+-------------+
+| Ritwick |      100.50 |
+| Raj     |       50.50 |
+| Ram     |       60.50 |
++---------+-------------+
+3 rows in set (0.00 sec)
+```
+
+### 36. Increase the due balance of every suppliers by 20%.
+
+```sql
+use ritwick;
+update supplier_master
+  set balance_due = balance_due + balance_due * 0.2;
+select balance_due from supplier_master;
+```
+
+**Output:**
+
+```sql
++-------------+
+| balance_due |
++-------------+
+|      120.60 |
+|       60.60 |
+|       72.60 |
+|      120.60 |
++-------------+
+4 rows in set (0.00 sec)
+```
+
+### 37. Add two columns to store telephone, fax into client master table.
+
+```sql
+use ritwick;
+alter table client_master add (
+  client_telephone integer(8),
+  client_fax integer(14)
+);
+desc client_master;
+```
+
+**Output:**
+
+```sql
++------------------+-------------+------+-----+---------+-------+
+| Field            | Type        | Null | Key | Default | Extra |
++------------------+-------------+------+-----+---------+-------+
+| clientNo         | varchar(15) | YES  |     | NULL    |       |
+| name             | varchar(20) | YES  |     | NULL    |       |
+| address1         | varchar(30) | YES  |     | NULL    |       |
+| address2         | varchar(30) | YES  |     | NULL    |       |
+| city             | varchar(15) | YES  |     | NULL    |       |
+| state            | varchar(15) | YES  |     | NULL    |       |
+| pincode          | int         | YES  |     | NULL    |       |
+| remarks          | varchar(60) | YES  |     | NULL    |       |
+| balance_due      | float(10,2) | YES  |     | NULL    |       |
+| client_telephone | int         | YES  |     | NULL    |       |
+| client_fax       | int         | YES  |     | NULL    |       |
++------------------+-------------+------+-----+---------+-------+
+11 rows in set (0.00 sec)
+```
+
+### 38. Modify the data type of fax to varchar(14) in client_master.
+
+```sql
+alter table client_master modify column client_fax varchar(14);
+desc client_master;
+```
+
+**Output:**
+
+```sql
++------------------+-------------+------+-----+---------+-------+
+| Field            | Type        | Null | Key | Default | Extra |
++------------------+-------------+------+-----+---------+-------+
+| clientNo         | varchar(15) | YES  |     | NULL    |       |
+| name             | varchar(20) | YES  |     | NULL    |       |
+| address1         | varchar(30) | YES  |     | NULL    |       |
+| address2         | varchar(30) | YES  |     | NULL    |       |
+| city             | varchar(15) | YES  |     | NULL    |       |
+| state            | varchar(15) | YES  |     | NULL    |       |
+| pincode          | int         | YES  |     | NULL    |       |
+| remarks          | varchar(60) | YES  |     | NULL    |       |
+| balance_due      | float(10,2) | YES  |     | NULL    |       |
+| client_telephone | int         | YES  |     | NULL    |       |
+| client_fax       | varchar(14) | YES  |     | NULL    |       |
++------------------+-------------+------+-----+---------+-------+
+11 rows in set (0.00 sec)
+```
+
+### 39. Rename table name client_master to client_details.
+
+```sql
+use ritwick;
+rename table client_master to client;
+select clientNo from client;
+```
+
+**Output:**
+
+```sql
++----------+
+| clientNo |
++----------+
+| 1        |
+| 3        |
+| 4        |
++----------+
+3 rows in set (0.00 sec)
+```
+
+### 40. Write a SQL query to calculate a 5% increase on the `balance_due` and also calculate the new balance by adding this 5% increase to the `balance_due`?
+
+```sql
+use ritwick;
+select balance_due, balance_due * 0.05 as `5% increase`, balance_due + balance_due * 0.05 as `105% increase`
+from client;
+```
+
+**Output:**
+
+```sql
++-------------+-------------+---------------+
+| balance_due | 5% increase | 105% increase |
++-------------+-------------+---------------+
+|      100.50 |        5.03 |        105.53 |
+|       50.50 |        2.53 |         53.02 |
+|       60.50 |        3.03 |         63.52 |
++-------------+-------------+---------------+
+3 rows in set (0.00 sec)
+```
+
+### 41. Find out all customer whose name starts with 'R'.
+
+```sql
+use ritwick;
+select name from client
+where name like 'R%';
+```
+
+**Output:**
+
+```sql
++---------+
+| name    |
++---------+
+| Ritwick |
+| Raj     |
+| Ram     |
++---------+
+3 rows in set (0.00 sec)
+```
+
+### 42. Can you write a SQL query to find clients whose names start with 'ra' or 'so' followed by exactly one or four characters?
+
+```sql
+use ritwick;
+select name from client
+where name like 'ra_' or name like 'so____';
+```
+
+**Output:**
+
+```sql
++------+
+| name |
++------+
+| Raj  |
+| Ram  |
++------+
+2 rows in set (0.00 sec)
 ```
