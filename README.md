@@ -767,7 +767,7 @@ where s1.RNo = s2.branchId;
 4 rows in set (0.00 sec)
 ```
 
-### 31. Find out the clients having balance due greater than 50.
+### 31. Find out the client's no, name, city and balance due having balance due greater than 50.
 
 ```sql
 select clientNo, name, city, balance_due from client_master
@@ -777,13 +777,13 @@ where balance_due > 50;
 **Output:**
 
 ```sql
-+----------+---------+----------+----------+--------+-------------+---------+---------+-------------+
-| clientNo | name    | address1 | address2 | city   | state       | pincode | remarks | balance_due |
-+----------+---------+----------+----------+--------+-------------+---------+---------+-------------+
-| 1        | Ritwick | Khalna   | Howrah   | Bagnan | West Bengal |  711413 | Good    |      100.50 |
-| 3        | Raj     | Khalna   | Howrah   | Bagnan | West Bengal |  711413 | Great   |       50.50 |
-| 4        | Ram     | Uluberia | Howrah   | Bagnan | West Bengal |  700001 | Bad     |       60.50 |
-+----------+---------+----------+----------+--------+-------------+---------+---------+-------------+
++----------+---------+--------+-------------+
+| clientNo | name    | city   | balance_due |
++----------+---------+--------+-------------+
+| 1        | Ritwick | Bagnan |      100.50 |
+| 3        | Raj     | Bagnan |       50.50 |
+| 4        | Ram     | Bagnan |       60.50 |
++----------+---------+--------+-------------+
 3 rows in set (0.00 sec)
 ```
 
@@ -961,8 +961,8 @@ desc client_master;
 
 ```sql
 use ritwick;
-rename table client_master to client;
-select clientNo from client;
+rename table client_master to client_details;
+select clientNo from client_details;
 ```
 
 **Output:**
@@ -983,7 +983,7 @@ select clientNo from client;
 ```sql
 use ritwick;
 select balance_due, balance_due * 0.05 as `5% increase`, balance_due + balance_due * 0.05 as `105% increase`
-from client;
+from client_details;
 ```
 
 **Output:**
@@ -1003,7 +1003,7 @@ from client;
 
 ```sql
 use ritwick;
-select name from client
+select name from client_details
 where name like 'R%';
 ```
 
@@ -1024,7 +1024,7 @@ where name like 'R%';
 
 ```sql
 use ritwick;
-select name from client
+select name from client_details
 where name like 'ra_' or name like 'so____';
 ```
 
